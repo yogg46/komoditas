@@ -68,7 +68,7 @@ class User extends Authenticatable
     }
 
 
-    
+
     public function toRoleModels()
     {
         return $this->belongsTo(RoleModels::class, 'roles', 'id');
@@ -82,7 +82,7 @@ class User extends Authenticatable
     public function scopeSearch($query, $value){
         $query->where('name','like',"%{$value}%")
                 ->orWhere('username','like',"%{$value}%")
-                ->orWhere('email','like',"%{$value}%")
+                ->orWhere('nip','like',"%{$value}%")
                 ->orWhere('instansi_afs.instansi','like',"%{$value}%")
                 ->orWhere('role_afs.role','like',"%{$value}%");
     }

@@ -11,16 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('komoditas_afs', function (Blueprint $table) {
+        Schema::create('harga_komoditas_afs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('komoditas');
-            $table->foreignUuid('fk_pasar_id')->nullable()
+            $table->foreignUuid('fk_sub_komoditas_id')
                 ->references('id')
-                ->on('pasar_afs')
+                ->on('sub_komoditas_afs')
                 ->onUpdate('CASCADE')
                 ->onDelete('RESTRICT');
+            $table->date('tanggal');
+            $table->integer('harga_lama')->nullable();
+            $table->integer('harga_baru')->nullable();
             $table->timestamps();
-            $table->index('komoditas');
+
+            $table->index('fk_sub_komoditas_id');
+            $table->index('tanggal');
         });
     }
 
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('komoditas_afs');
+        Schema::dropIfExists('harga_komoditas_models');
     }
 };

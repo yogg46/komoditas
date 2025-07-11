@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('komoditas_afs', function (Blueprint $table) {
+        Schema::create('pasar_afs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('komoditas');
-            $table->foreignUuid('fk_pasar_id')->nullable()
-                ->references('id')
-                ->on('pasar_afs')
-                ->onUpdate('CASCADE')
-                ->onDelete('RESTRICT');
+            $table->string('nama_pasar');
+            $table->string('alamat')->nullable();
             $table->timestamps();
-            $table->index('komoditas');
         });
     }
 
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('komoditas_afs');
+        Schema::dropIfExists('pasar_models');
     }
 };

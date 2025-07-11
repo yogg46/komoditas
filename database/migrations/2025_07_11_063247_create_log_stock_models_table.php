@@ -11,16 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('komoditas_afs', function (Blueprint $table) {
+        Schema::create('log_stock_afs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('komoditas');
-            $table->foreignUuid('fk_pasar_id')->nullable()
+            $table->foreignUuid('fk_stok_komoditas_id')
                 ->references('id')
-                ->on('pasar_afs')
+                ->on('stok_komoditas_afs')
                 ->onUpdate('CASCADE')
                 ->onDelete('RESTRICT');
+            $table->integer('old_stock');
+            $table->integer('new_stock');
+            $table->foreignUuid('created_by')
+                ->constrained('users')
+                ->onUpdate('CASCADE')
+                ->onDelete('RESTRICT');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
-            $table->index('komoditas');
         });
     }
 
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('komoditas_afs');
+        Schema::dropIfExists('log_stock_models');
     }
 };
