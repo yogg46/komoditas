@@ -30,7 +30,7 @@ class Userseeder extends Seeder
             'id'        => Str::uuid(),
             'username'  => 'ybp@ybp.dev',
             'nip'     => '200009142025051002',
-            'password'  => Hash::make('!123123@Ybp'),
+            'password'  => Hash::make('password'),
             'name'      => 'Yoga Bayu P',
             // 'email_verified_at' => date('Y-m-d H:m:s'),
             'roles'     => 1,

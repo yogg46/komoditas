@@ -10,11 +10,11 @@ class KomoditasModels extends Model
     //
     use Uuids;
     protected $table = 'komoditas_afs';
-    protected $fillable = ['id', 'komoditas'];
+    protected $fillable = ['id', 'komoditas','fk_pasar_id','urutan'];
 
 
     public function scopeSearch($query, $value) {
         $query->where('komoditas', 'like', "%{$value}%");
     }
-    
+
 }

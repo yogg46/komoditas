@@ -10,7 +10,7 @@ class SubKomoditasModels extends Model
     //
     use Uuids;
     protected $table = 'sub_komoditas_afs';
-    protected $fillable = ['id', 'sub_komoditas', 'komoditas_id'];
+    protected $fillable = ['id', 'sub_komoditas', 'komoditas_id', 'satuan', 'urutan', 'publish'];
 
 
 

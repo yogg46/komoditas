@@ -3,30 +3,35 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use App\Helpers\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
+
+use App\Helpers\Uuids;
+use App\Models\RoleModels;
+use App\Models\InstansiModels;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, Uuids;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
+
+    // protected $primaryKey   = 'id';
+    // protected $keyType      = 'string';
+    // public $incrementing    = false;
+
     protected $fillable = [
         'id',
         'username',
         'password',
         'name',
         'nip',
-        'email_verified_at',
+        // 'email_verified_at',
         'roles',
         'st_user',
         'fk_instansi_id'
@@ -35,7 +40,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -55,20 +60,6 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Get the user's initials
-     */
-    public function initials(): string
-    {
-        return Str::of($this->name)
-            ->explode(' ')
-            ->take(2)
-            ->map(fn($word) => Str::substr($word, 0, 1))
-            ->implode('');
-    }
-
-
-
     public function toRoleModels()
     {
         return $this->belongsTo(RoleModels::class, 'roles', 'id');
@@ -82,7 +73,7 @@ class User extends Authenticatable
     public function scopeSearch($query, $value){
         $query->where('name','like',"%{$value}%")
                 ->orWhere('username','like',"%{$value}%")
-                ->orWhere('nip','like',"%{$value}%")
+                ->orWhere('email','like',"%{$value}%")
                 ->orWhere('instansi_afs.instansi','like',"%{$value}%")
                 ->orWhere('role_afs.role','like',"%{$value}%");
     }

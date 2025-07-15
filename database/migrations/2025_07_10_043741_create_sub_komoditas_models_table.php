@@ -20,6 +20,8 @@ return new class extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('RESTRICT');
             $table->string('satuan', 10)->default('Kg');
+            $table->integer('urutan')->default(0);
+            $table->string('publish')->default('N');
             $table->timestamps();
         });
     }

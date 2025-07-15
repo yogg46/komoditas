@@ -1,24 +1,40 @@
 <?php
 
-use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\Password;
-use App\Livewire\Settings\Profile;
+
+
+use App\Livewire\Be\Profile\Profile;
+use App\Livewire\Be\Setting\Setting;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Be\Dashboard\Dashboard;
+use App\Http\Controllers\Auth\AuthController;
+use App\Livewire\Be\GantiPassword\GantiPassword;
+use App\Livewire\Be\Komoditas\Komoditas;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('not-found', function () {
+    return view('errors.not-found');
+})->name('not-found');
 
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
 
-    Route::get('settings/profile', Profile::class)->name('settings.profile');
-    Route::get('settings/password', Password::class)->name('settings.password');
-    Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+
+
+Route::get('/sitelogin', [AuthController::class, 'index'])->name('login');
+Route::post('/sitelogin', [AuthController::class, 'login'])->name('login.post')->middleware('throttle:login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/password', GantiPassword::class)->name('ganti-password')->middleware(['akses:1,2,3,4']);
+    Route::get('/profile', Profile::class)->name('profile')->middleware(['akses:1,2,3,4']);
+
+
+
+    Route::group(['middleware' => ['akses:1,2']], function () {
+        Route::get('/setting', Setting::class)->name('setting');
+        Route::get('/komoditas', Komoditas::class)->name('komoditas');
+
+    });
 });
-
-require __DIR__.'/auth.php';

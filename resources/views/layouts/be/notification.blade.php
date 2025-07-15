@@ -1,0 +1,1 @@
+@livewire('be.notification.notif')

@@ -11,4 +11,7 @@ class RoleModels extends Model
     use HasFactory;
     protected $table = 'role_afs';
     protected $fillable = ['role'];
+
+
+    
 }

@@ -19,6 +19,8 @@ return new class extends Migration
                 ->on('pasar_afs')
                 ->onUpdate('CASCADE')
                 ->onDelete('RESTRICT');
+            $table->integer('urutan')->default(0);
+            $table->string('publish')->default('N');
             $table->timestamps();
             $table->index('komoditas');
         });
